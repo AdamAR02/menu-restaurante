@@ -14,6 +14,23 @@
 </head>
 <body>
     
+<!--header-->
+<header>
+    <div class="header-brand">
+        <h1>La Mesa del Chef</h1>
+        <p>Sistema de menu - Firebase Realtime DB</p>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <span class="db-status" id="db-status">
+        <span class="db-dot" id="db-dot"></span>
+        <span class="db-label">Sin conexion</span>
+        </span>
+        <div class="header-tabs">
+            <button class="tab-btn active" onclick="switchTab('menu')"> Menu</button>
+            <button class="tab-btn" onclick="switchTab('admin')"> Mantenimientos</button>
+    </div>
+    </div>
+</header>
 
 </body>
 </html>
