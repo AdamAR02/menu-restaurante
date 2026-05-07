@@ -11,6 +11,7 @@ function initFirebase(){
         db = firebase.database();
 
         db.ref('.info/connected').on('value', snap => {
+          
             setDbStatus(snap.val()=== true ? 'connected' : 'disconnected');
 
         });
@@ -21,3 +22,20 @@ function initFirebase(){
         setDbStatus('error');
     }
 }
+
+/*firebase - escuchar cambios en tiempo real*/
+
+
+function startListening() {
+if (!db) return;
+const ref = db.ref('platillos');
+
+ref.on('value', snap => {
+    const data = snap.val() || {};
+    const list = Object.entries(data).map(([id, val]) => ({id, ...val }));
+    renderAll(list);
+}, err => {
+    showToast('Error al leer datos: ' + err.message, 'error');
+});
+}
+
