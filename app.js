@@ -39,3 +39,24 @@ ref.on('value', snap => {
 });
 }
 
+
+/*Cargar datos de ejemplo*/
+
+function cargarEjemplos() {
+    if (!db) return;
+    db.ref('platillos').once('value').then(snap => {
+        if (snap.exist()) {
+            showToast('La base de datos ya tiene platillos registrados.', 'info');
+            return;
+        }
+        const batch = {};
+        PLATILLOS_EJEMPLO.forEach(p => {
+            const key = db.ref('platillos').push().key;
+            batch['platillos/' + key] = p;
+        });
+        db.ref().update(batch)
+        .then(() => showToast('i' + PLATILLOS_EJEMPLO.length + 'platillos de ejemplo cargados!', 'success'))
+        .catch(e => showToast('Error al cargar ejemplos: ' + e.message, 'error'));
+    });
+}
+
