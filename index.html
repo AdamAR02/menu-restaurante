@@ -45,6 +45,84 @@
 </div>
 </div>
 
+<!--Seccion: Mantenimiento-->
+<div id="section-admin" class="section">
+
+    <!--Estadisticas-->
+<div class="stats-bar" if="stats-bar">
+<div class="stats-card">
+<div class="stat-val" id="stat-total">0</div>
+<div class="stat-lbl">Platillos</div>
+</div>
+<div class="start-card">
+<div class="stat-val" id="stat-cats">0</div>
+<div class="stat-lbl">Categorias</div>
+</div>
+<div class="stat-card">
+<div class="stat-val" id="stat-avg"> ₡0</div>
+<div class="stat-lbl">Precio promedio</div>
+</div>
+</div>
+
+<!--Formulario-->
+<div class="form-card">
+<h2 id="form-title">Agregar nuevo platillo</h2>
+<input type="hidden" id="edit-id">
+
+<div class="form-grid">
+<div class="form-group">
+<label>Nombre del platillo</label> 
+<input type="text" id="f-price" placeholder="Ej: Pollo al ajillo">
+</div>
+<div class="form-group">
+<label>Precio (₡)*</label>
+<input type="number" id="f-price" placeholder="Ej: 4500" min="0">
+</div>
+<div class="form-group">
+<label>Categoria *</label>
+<select id="f-cat"></select>
+</div>
+<div class="form-group">
+<label>Emoji / icono</label>
+<input type="text" id="f-icon" placeholder="🍽️" maxlength="4">
+</div>
+</div>
+<div class="form-grid full" style="margin-top:14px;">
+<div class="form-group">
+<label>Descripcion</label>
+<textarea id="f-desc" placeholder="Ingredientes o descripcion del platillo..."></textarea>
+</div>
+</div>
+<div class="from-actions">
+<button class="btn-primary" onclick="saveDish()">
+<span id="btn-save-text">Agregar platillos</span>
+</button>
+<button class="btn btn-secondary" onclick="claerform()">Limpiar</button>
+<button class="btn btn-secondary" id="btn-cancel-edit" onclick="cancelEdit()" style="display:none;color:#C0392B; border-color:#E0B0AD;">
+Cancelar edicion
+</button> 
+</div>
+</div>
+
+<!--Lista de platillos-->
+<div class="admin-section-title">
+Platillos registrados
+<span id="admin-count" style="font-size:0.8rem; color:var(--muted); font-weight:400; font-family:var(--font-body);"></span>
+<button class="btn btn-secondary" style="margin-left:auto; font-size:0.78rem; padding:5px 14px;" onclick="cargarEjemplos()">
+⬇️Cargar platillos de ejemplo
+</button>
+</div>
+<div id="admin-list">
+<div class="loading">Cargando...</div>
+</div>
+
+</div>
 </main>
+
+<!--Toast-->
+<div class="toast" id="toast"></div>
+
+<!--Scripts-->
+<!--1. Firebase SDK-->
 </body>
 </html>
