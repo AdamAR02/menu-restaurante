@@ -3,135 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Mesa Del Chef - Menú</title>
+    <link href="styles.css">
+    <title>La Mesa del Chef</title>
 
-    <!-- Fuentes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://gonts.googleapis.com/css2? family=Playfair=Display:wght@400;600;700&family=DM=Sans:wght@300;400;500&display=swap">
-   <link rel="stylesheet" href="styles.css">
-    <!-- Estilos -->
-    <link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
-    
-<!--header-->
-<header>
-    <div class="header-brand">
-        <h1>La Mesa del Chef</h1>
-        <p>Sistema de menu - Firebase Realtime DB</p>
-    </div>
-    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-        <span class="db-status" id="db-status">
-        <span class="db-dot" id="db-dot"></span>
-        <span class="db-label">Sin conexion</span>
-        </span>
-        <div class="header-tabs">
-            <button class="tab-btn active" onclick="switchTab('menu')"> Menu</button>
-            <button class="tab-btn" onclick="switchTab('admin')"> Mantenimientos</button>
-    </div>
-    </div>
-</header>
+    <!--Header-->
+    <header>
+        <div class="header brand">
+            <h1>La mesa del Chef</h1>
+            <p>Sistema de menu * Firebase Realtime DB</p>
+        </div>
+        <div style="display:flex; align-items: center; gap: 12px; flex:wrap;">
+            <span class="db-status" id="db-status">
+            <span class="db-dot" id="db-dot"></span>
+            <span id="db-label">Sin conexion</span>
+            </span>
+            <div class="header-tabs">
+                <button class="tab-btn active" onclick="switchTab('menu')">Menu</button>
+                <button class="tab-btn" onclick="switchTab('admin')">Mantenimiento</button>
+            </div>
+            </div>
+    </header>
+    <!--Main-->
+    <main>
+        <div id="section-content" class="section-active">
+            <div class="filter-bar" id="filter-bar">
+                <button class="pill active" data-cat="all" onclick="setFilter('all , this')">Todos</button>
+            </div>
+            <div id="menu-content">
+                <div class="loading">Cargando menu...</div>
+            </div>
+        </div>
+      <!--Seccion: mantenimineinto===-->
+      <div id="section-admin" class="section">
+        <!--Estadisticas-->
+        <div class="stats-bar" id="stats-bar">
+            <div class="stats-card">
+                <div class="stat-val" id="stat-total">0</div>
+                <div class="stat-lbl">Platillos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="stat-cats">0</div>
+                <div class="stat-lbl">Categorias</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="stat-avg">₡0</div>
+                <div class="stat-lbl">Precio promedio</div>
+            </div>
+        </div>
+         <!--Formulario-->
+        <div class="form-card">
+            <h2 id="form-title">Agregar nuevo platillo</h2>
+            <input type="hidden" id="edit-id">
 
-<!--Main-->
-<main>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nombre del platillo *</label>
+                    <input type="text" id="f-name" placeholder="Ej:Pollo al ajillo">
+                </div>
+                <div class="form-group">
+                    <label>Precio(₡)* </label>
+                    <input type="number" id="f-price" placeholder="Ej: 4500" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Categoria *</label>
+                    <select id="f-cat"></select>
+                </div>
+                <div class="form-group">
+                    <label>Emoji / icono</label>
+                    <input type="text" id="f-icon" placeholder="🍽️" maxlength="4">
+                </div>
+            </div>
+            <div class="form-grid full" style="margin-top:14;">
+                <div class="form-group">
+                    <label">Descripcion</label>
+                    <textarea id="f-desc" placeholder="Ingredientes o descripcion del platilo...."></textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary" onclick="saveDish()">
+                    <span id="btn-save-text">Agregar platillo</span>
+                </button>
+                <button class="btn btn-primary" onclick="clearForm()">Limpiar</button>
+                <button class="btn btn-secondary" id="btn-cancel-edit" onclick="cancelEdit()" style="display:none; color: #c0392b; border-color: #e0b0ad;">
+                    Cancelar edicion
+                </button>
+            </div>
+        </div>
+         <!--Lista de platillos-->
+         <div class="admin-section-title">
+            Platillos registrados
+             <span id="admin-count" style="font-size: 0.8rem; color:var(--muted);font-weight: 400; font-family: var(--font-body);"></span>
+             <button class="btn btn-secondary" style="margin-left:auto; font-size:0.78rem; padding: 5px 14px;" onclick="cargarEjemplos()">
+                Cargar platillos de Ejemplos
+             </button>
+         </div>
+         <div id="admin-list">
+            <div class="loading">Cargando..</div>
+         </div>
+        </main>
+        <!--Toast-->
+        <div class="toast" id="toast"></div>
+        <!--Scripts-->
+        <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
-<!--Seccion: Menu-->
-<div id="section-menu" class="section active">
-    <div class="filter-bar" id="filter-bar">
-        <button class="pill active" data-cat="all" onclick="setFilter('all', this)">Todos</button>
-    </div>
-<div id="menu-content">
-    <div class="loading">Cargando menu...</div>
-</div>
-</div>
-
-<!--Seccion: Mantenimiento-->
-<div id="section-admin" class="section">
-
-    <!--Estadisticas-->
-<div class="stats-bar" if="stats-bar">
-<div class="stats-card">
-<div class="stat-val" id="stat-total">0</div>
-<div class="stat-lbl">Platillos</div>
-</div>
-<div class="start-card">
-<div class="stat-val" id="stat-cats">0</div>
-<div class="stat-lbl">Categorias</div>
-</div>
-<div class="stat-card">
-<div class="stat-val" id="stat-avg"> ₡0</div>
-<div class="stat-lbl">Precio promedio</div>
-</div>
-</div>
-
-<!--Formulario-->
-<div class="form-card">
-<h2 id="form-title">Agregar nuevo platillo</h2>
-<input type="hidden" id="edit-id">
-
-<div class="form-grid">
-<div class="form-group">
-<label>Nombre del platillo</label> 
-<input type="text" id="f-price" placeholder="Ej: Pollo al ajillo">
-</div>
-<div class="form-group">
-<label>Precio (₡)*</label>
-<input type="number" id="f-price" placeholder="Ej: 4500" min="0">
-</div>
-<div class="form-group">
-<label>Categoria *</label>
-<select id="f-cat"></select>
-</div>
-<div class="form-group">
-<label>Emoji / icono</label>
-<input type="text" id="f-icon" placeholder="🍽️" maxlength="4">
-</div>
-</div>
-<div class="form-grid full" style="margin-top:14px;">
-<div class="form-group">
-<label>Descripcion</label>
-<textarea id="f-desc" placeholder="Ingredientes o descripcion del platillo..."></textarea>
-</div>
-</div>
-<div class="from-actions">
-<button class="btn-primary" onclick="saveDish()">
-<span id="btn-save-text">Agregar platillos</span>
-</button>
-<button class="btn btn-secondary" onclick="claerform()">Limpiar</button>
-<button class="btn btn-secondary" id="btn-cancel-edit" onclick="cancelEdit()" style="display:none;color:#C0392B; border-color:#E0B0AD;">
-Cancelar edicion
-</button> 
-</div>
-</div>
-
-<!--Lista de platillos-->
-<div class="admin-section-title">
-Platillos registrados
-<span id="admin-count" style="font-size:0.8rem; color:var(--muted); font-weight:400; font-family:var(--font-body);"></span>
-<button class="btn btn-secondary" style="margin-left:auto; font-size:0.78rem; padding:5px 14px;" onclick="cargarEjemplos()">
-⬇️Cargar platillos de ejemplo
-</button>
-</div>
-<div id="admin-list">
-<div class="loading">Cargando...</div>
-</div>
-
-</div>
-</main>
-
-<!--Toast-->
-<div class="toast" id="toast"></div>
-
-<!--Scripts-->
-<!--1. Firebase SDK-->
-<script src"https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat"></script>
-<script src"https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
-<!--2. configuracion y datos-->
-<script src="friebase-config.js"></script>
-
-<!--3. Logica de la aplicacion-->
-<script src="app.js"></script>
+        <script src="firebase-config.js"></script>
+        <!--1.Firebase SDK-->
+        <script src="app.js"></script>
 
 </body>
 </html>

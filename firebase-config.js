@@ -1,27 +1,12 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAr-yIgCc_Zds5SpD31t2SA2LM50J_fpDQ",
-  authDomain: "menu-restaurante-103a3.firebaseapp.com",
-  projectId: "menu-restaurante-103a3",
-  storageBucket: "menu-restaurante-103a3.firebasestorage.app",
-  messagingSenderId: "409209420635",
-  appId: "1:409209420635:web:4332e893ec458e72adf87e"
+  apiKey: "AIzaSyApWfwrYHh33ZVDaUQcU4A9zFDBpKUqJ2k",
+  authDomain: "menu-restaurante-9f287.firebaseapp.com",
+  databaseURL: "https://menu-restaurante-103a3-default-rtdb.firebaseio.com/",
+  projectId: "menu-restaurante-9f287",
+  storageBucket: "menu-restaurante-9f287.firebasestorage.app",
+  messagingSenderId: "157490303371",
+  appId: "1:157490303371:web:c98ab3b3dad0e7e0ee9f8e"
 };
-
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 const CATS = [
     { id: 'entrada', name: 'Entradas', icon: '🥗', color: '#7F77DD', bg: '#EEEDFE' },
