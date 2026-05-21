@@ -14,7 +14,7 @@
 }
 
 
-,::before, *::after {box-sizing: border-box; margin: 0; paddin: 0;}
+*,*::before, *::after { box-sizing: border-box; margin: 0; padding: 0;}
 body{
 font-family: var(--font-body);
 background: var(--font-body);
@@ -24,7 +24,7 @@ min-height: 100vh;
 line-height: 1.6;
 }
 
-/--header----/
+/*--header----*/
 header{
 
 color: var(--cream);
@@ -62,7 +62,7 @@ border: none;
 color:#A09880;
 font-family: var(--font-body);
 font-size: 0.83rem;
-font-weigth: 500;
+font-weight: 500;
 padding: 6px;
 border-radius: 7px;
 cursor:pointer;
